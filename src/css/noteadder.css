@@ -2,16 +2,38 @@
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #e8e8e8;
+  background-color: #0e0c7c;
   height: 100%;
+  overflow: hidden;
 }
 .arrowback.notesadders {
   margin-right: 1em;
 }
-.Notesadd {
-  flex-grow: 1;
-  background-color: #f7ecdc;
+.noteaddermainbody .initialsff {
+  color: #ffffff; 
 }
+
+.NotesaddContainer {
+  flex-grow: 1;
+  overflow-y: auto; 
+  background-color: #f7ecdc;
+  padding: 1em;
+  max-height: 60vh;
+}
+
+.NotesaddContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.NotesaddContainer::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 4px;
+}
+
+.NotesaddContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #b3b3b3;
+}
+
 .timeandnotes {
   display: flex;
   overflow: hidden;
@@ -51,6 +73,41 @@
 .bydeftextarea {
   display: none;
 }
+
+.noteBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #ffffff;
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.noteText {
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
+}
+
+.noteTimestamp {
+  font-size: 0.8rem;
+  color: #000;
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.dotSeparator {
+  font-size: 4.5rem;
+  line-height: 0;
+  margin: 0 0.5em;
+}
+
 @media only screen and (min-width: 701px) {
   .noteaddermainbody {
     display: flex;
@@ -68,11 +125,13 @@
     vertical-align: middle;
     width: inherit;
   }
-  .Notesadd {
+  
+  .NotesaddContainer {
     flex-grow: 1;
-
     background-color: #f7ecdc;
+    padding: 1em;
   }
+  
   .timeandnotes {
     display: flex;
     overflow: hidden;
@@ -81,7 +140,6 @@
   }
   .timeadder {
     margin-left: 1em;
-
     font-weight: 600;
     width: min-content;
   }
@@ -112,6 +170,12 @@
     right: 25px;
     bottom: 15px;
   }
+
+  .notesbutton.active img {
+    filter: brightness(0) saturate(100%) invert(25%) sepia(83%) saturate(5000%)
+      hue-rotate(200deg) brightness(95%) contrast(100%);
+  }
+
   .bydeftextarea {
     display: flex;
     align-items: center;
@@ -135,7 +199,6 @@
     width: min-content;
   }
   .Sidebarmain {
-    /* Styles for wider screens */
-    display: flex; /* or any other display value you want */
+    display: flex; 
   }
 }

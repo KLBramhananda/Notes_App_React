@@ -6,30 +6,29 @@ import bg from "../assets/bg.png";
 import lock from "../assets/lock.svg";
 
 const Notesadder = ({ selectedX }) => {
-  const [note, setNote] = useState(""); 
-  const [notes, setNotes] = useState([]); 
-  const [key, setKey] = useState(""); 
+  const [note, setNote] = useState("");
+  const [notes, setNotes] = useState([]);
+  const [key, setKey] = useState("");
   const [yValue, setYValue] = useState("");
   const screenWidth = window.innerWidth;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (note.trim() !== "") {
       const currentDate = new Date();
-      const formattedTime = currentDate.toLocaleString("en-US", {
+      const formattedDate = currentDate
+        .toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })
+        .replace(/ /g, " ");
+      const formattedTime = currentDate.toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
       });
-
-      const formattedDate = currentDate.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-
-      const timestamp = `${formattedTime}\n${formattedDate}`;
-
+      const timestamp = `${formattedDate} • ${formattedTime}`;
       const newNote = { text: note, timestamp: timestamp };
 
       const storedNotesInfo =
@@ -45,8 +44,7 @@ const Notesadder = ({ selectedX }) => {
         storedNotesInfo[key].notesgn.push(newNote);
       }
 
-      localStorage.setItem("NotesInfo", JSON.stringify(storedNotesInfo)); 
-
+      localStorage.setItem("NotesInfo", JSON.stringify(storedNotesInfo));
       setNotes([...notes, newNote]);
       setNote("");
     }
@@ -54,28 +52,37 @@ const Notesadder = ({ selectedX }) => {
 
   useEffect(() => {
     const storedNotesInfo = JSON.parse(localStorage.getItem("NotesInfo")) || {};
-    console.log("selectedX.x:", selectedX.x);
     if (
       storedNotesInfo[selectedX.x] &&
       Array.isArray(storedNotesInfo[selectedX.x].notesgn)
     ) {
       setNotes(storedNotesInfo[selectedX.x].notesgn);
     } else {
-      setNotes([]); 
+      setNotes([]);
       setKey(null);
     }
     setKey(selectedX.x);
     setYValue(selectedX.y);
   }, [selectedX]);
+
   const handlearrow = () => {
-    const popupbody = document.querySelector(".noteaddermainbody"); 
-    const sideb = document.querySelector(".Sidebarmain"); 
+    const popupbody = document.querySelector(".noteaddermainbody");
+    const sideb = document.querySelector(".Sidebarmain");
     setKey("");
     if (screenWidth < 701) {
       sideb.style.display = "block";
       popupbody.style.display = "none";
     }
   };
+
+  const getInitials = (name) => {
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+  };
+
   return (
     <div className="noteaddermainbody">
       <div className="bydeftextarea">
@@ -92,7 +99,7 @@ const Notesadder = ({ selectedX }) => {
                 style={{ position: "absolute", bottom: "10px", left: "44%" }}
               >
                 <img src={lock} alt="" />{" "}
-                <lable
+                <label
                   style={{
                     fontSize: "large",
                     marginLeft: "5px",
@@ -100,12 +107,11 @@ const Notesadder = ({ selectedX }) => {
                   }}
                 >
                   end-to-end encrypted
-                </lable>
+                </label>
               </span>
             </div>
           </div>
         )}
-        ;
       </div>
 
       <div className="notesadder">
@@ -117,29 +123,36 @@ const Notesadder = ({ selectedX }) => {
             className="initials"
             style={{ backgroundColor: `${selectedX.y}` }}
           >
-            {selectedX.x.slice(0, 2).toUpperCase()}
+            {getInitials(selectedX.x)}
           </div>
-          <div className="initialsff">{key}</div>
+          <div className="initialsff" style={{ color: "#FFFFFF" }}>{key}</div>
         </div>
       </div>
-      <div className="Notesadd">
-        {notes.map((note, index) => (
-          <div className="timeandnotes" key={index}>
-            <div className="timeadder">{note.timestamp}</div>
-            <div className="timeaddernone">{note.text}</div>
-          </div>
-        ))}
+
+      <div className="NotesaddContainer">
+        <div className="Notesadd">
+          {notes.map((note, index) => (
+            <div className="noteBox" key={index}>
+              <div className="noteText">{note.text}</div>
+              <div className="noteTimestamp">{note.timestamp}</div>
+            </div>
+          ))}
+        </div>
       </div>
+
       <form onSubmit={handleSubmit} className="formofnotes">
         <textarea
           className="notestext"
           type="textarea"
-          placeholder="Enter your note..."
+          placeholder="Enter your text here.........."
           value={note}
           onChange={(e) => setNote(e.target.value)}
         />
-        <button className="notesbutton" type="submit">
-          <img src={send} />
+        <button
+          className={`notesbutton ${note.trim() ? "active" : ""}`}
+          type="submit"
+        >
+          <img src={send} alt="Send" />
         </button>
       </form>
     </div>

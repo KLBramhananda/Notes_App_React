@@ -7,7 +7,7 @@
   --c6: #6691ff;
 }
 * {
-  box-sizing: border-box; /*Very Important for limiting the behaviour of imbalanced box sizing*/
+  box-sizing: border-box; 
 }
 
 .mainbody {
@@ -70,7 +70,7 @@
   height: 1.5em;
   background-color: var(--c1);
   border-radius: 50%;
-  vertical-align: text-top; /*Another important css feature*/
+  vertical-align: text-top; 
   appearance: none;
   outline: none;
   cursor: pointer;
@@ -100,7 +100,6 @@
     height: 100vh;
     z-index: 1;
   }
-  /* Your desktop-specific styles go here */
   .popupcard {
     width: 600px;
     height: fit-content;
