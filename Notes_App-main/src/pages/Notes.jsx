@@ -21,7 +21,6 @@ function Notes() {
     const storedNotesInfo = localStorage.getItem("NotesInfo");
 
     if (storedNotesInfo == null) {
-      // "NotesInfo" is not empty, so show the Popup
       setShowPopup(true);
     }
   }, []);

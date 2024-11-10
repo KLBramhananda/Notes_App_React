@@ -6,13 +6,13 @@ function Sidebar({ storedData, onDataClick, togglepop }) {
   const screenWidth = window.innerWidth;
   useEffect(() => {
     const storedNotesInfo = JSON.parse(localStorage.getItem("NotesInfo")) || {};
-    console.log("Stored Notes Info:", storedNotesInfo); // Debugging statement
+    console.log("Stored Notes Info:", storedNotesInfo);
     const infoArray = Object.values(storedNotesInfo);
     setAllInfoObjects(infoArray);
   }, [storedData]);
 
-  const popupbody = document.querySelector(".noteaddermainbody"); //enable notesadder
-  const sideb = document.querySelector(".Sidebarmain"); //disable sidebar notesadder
+  const popupbody = document.querySelector(".noteaddermainbody"); 
+  const sideb = document.querySelector(".Sidebarmain"); 
 
   const handlenotesadder = (info) => {
     let x = info.infogn.groupName;
@@ -30,8 +30,6 @@ function Sidebar({ storedData, onDataClick, togglepop }) {
 
   const popupopener = () => {
     togglepop();
-    /*  const popupbody = document.querySelector(".popupbody");
-    popupbody.classList.remove("active-modal"); */
   };
 
   return (
